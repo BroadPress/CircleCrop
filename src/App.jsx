@@ -126,6 +126,8 @@ function App() {
         img.onload = () => {
           canvas.width = img.width;
           canvas.height = img.height;
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(img, 0, 0);
           canvas.toBlob((blob) => {
             saveAs(blob, "cropped-image.jpg");
