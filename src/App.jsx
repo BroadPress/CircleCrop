@@ -8,10 +8,10 @@ function App() {
   const [image, setImage] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
 
-  // new state for format + size
   const [format, setFormat] = useState("png");
   const [size, setSize] = useState("original");
 
@@ -90,9 +90,6 @@ function App() {
         if (targetSize === "256") {
           width = 256;
           height = 256;
-        } else if (targetSize === "500") {
-          width = 500;
-          height = 500;
         } else if (targetSize === "1080") {
           width = 1080;
           height = 1080;
@@ -155,14 +152,19 @@ function App() {
     <div className="app-container">
       <h1>Circle Crop Image</h1>
       <p className="app-description">
-        Upload an image, crop it into a perfect circle, and download the result.
+        {croppedImage
+          ? "Upload an image, crop it into a perfect circle, and download the result."
+          : "Crop images instantly in perfect circles for social media, display picture, headshot and more with multiple file formats, multiple file sizes and original size."}
       </p>
 
       {!image && (
-        <div className="upload-container">
-          <label className="upload-button">
+        <div className="upload-box">
+          <label className="upload-label">
             <input type="file" accept="image/*" onChange={onFileChange} />
-            Upload Image
+            <div className="image">
+            <span>Upload Your Image</span>
+            <span>Drag & drop or click to select your image (Max 10 MB) </span>
+            </div>
           </label>
         </div>
       )}
@@ -174,10 +176,12 @@ function App() {
               image={image}
               crop={crop}
               zoom={zoom}
+              rotation={rotation}
               aspect={1}
               onCropChange={setCrop}
               onCropComplete={onCropComplete}
               onZoomChange={setZoom}
+              onRotationChange={setRotation}
               cropShape="round"
               showGrid={false}
             />
@@ -191,9 +195,21 @@ function App() {
                 min={1}
                 max={3}
                 step={0.1}
-                aria-labelledby="Zoom"
                 onChange={(e) => setZoom(Number(e.target.value))}
               />
+              <span>{Math.round(zoom * 100)}%</span>
+            </div>
+            <div className="zoom-control">
+              <label>Rotate Image</label>
+              <input
+                type="range"
+                value={rotation}
+                min={-180}
+                max={180}
+                step={1}
+                onChange={(e) => setRotation(Number(e.target.value))}
+              />
+              <span>{rotation}°</span>
             </div>
             <div className="buttons">
               <button className="button" onClick={resetImage}>
@@ -214,77 +230,63 @@ function App() {
           </div>
 
           <div className="options">
-            <div>
-              <p>Download As</p>
-              <label>
-                <input
-                  type="radio"
-                  value="jpg"
-                  checked={format === "jpg"}
-                  onChange={(e) => setFormat(e.target.value)}
-                />
-                .jpg
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="png"
-                  checked={format === "png"}
-                  onChange={(e) => setFormat(e.target.value)}
-                />
-                .png
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="pdf"
-                  checked={format === "pdf"}
-                  onChange={(e) => setFormat(e.target.value)}
-                />
-                .pdf
-              </label>
-            </div>
+            <p>Download</p>
+            <label>
+              <input
+                type="radio"
+                value="jpg"
+                checked={format === "jpg"}
+                onChange={(e) => setFormat(e.target.value)}
+              />
+              .jpg
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="png"
+                checked={format === "png"}
+                onChange={(e) => setFormat(e.target.value)}
+              />
+              .png
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="pdf"
+                checked={format === "pdf"}
+                onChange={(e) => setFormat(e.target.value)}
+              />
+              .pdf
+            </label>
 
-            <div>
-              <p>Size</p>
-              <label>
-                <input
-                  type="radio"
-                  value="256"
-                  checked={size === "256"}
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                256×256 px
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="500"
-                  checked={size === "500"}
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                500×500 px
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="1080"
-                  checked={size === "1080"}
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                1080×1080 px
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  value="original"
-                  checked={size === "original"}
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                Original
-              </label>
-            </div>
+            <p>Size</p>
+            <label>
+              <input
+                type="radio"
+                value="256"
+                checked={size === "256"}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              256×256 px
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="1080"
+                checked={size === "1080"}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              1080×1080 px
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="original"
+                checked={size === "original"}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              Original
+            </label>
           </div>
 
           <div className="buttons">

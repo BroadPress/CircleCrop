@@ -14,10 +14,11 @@
   align-items: center;
   max-width: 800px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
   color: #213547;
 }
@@ -28,44 +29,52 @@ h1 {
   color: #666;
 }
 
-.upload-container {
-  margin: 2rem 0;
-}
-
-.upload-button {
-  display: inline-block;
-  background-color: #646cff;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+.upload-box {
+  border: 2px dashed #ccc;
+  padding: 7rem;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s;
+  transition: border-color 0.3s;
 }
 
-.upload-button:hover {
-  background-color: #535bf2;
+.upload-box:hover {
+  border-color: #646cff;
 }
 
-.upload-button input[type="file"] {
+.upload-label {
+  font-size: 1.1rem;
+  color: #213547;
+  cursor: pointer;
+}
+
+.upload-label input {
   display: none;
 }
+
+.image{
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 .cropper-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 68vh;
 }
 
 .cropper {
   position: relative;
-  width: 100%;
+  width: 70%;
   height: 400px;
   background: #f9f9f9;
   border-radius: 8px;
   overflow: hidden;
 }
+
 
 .controls {
   width: 100%;
@@ -85,6 +94,13 @@ h1 {
 .zoom-control input[type="range"] {
   width: 100%;
   max-width: 400px;
+}
+
+.zoom-control span {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .buttons {
@@ -138,11 +154,25 @@ h1 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.options {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.options p {
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+
+.options label {
+  margin: 0 0.8rem;
+}
+
 @media (max-width: 768px) {
   .cropper {
     height: 300px;
   }
-  
+
   .cropped-image {
     width: 200px;
     height: 200px;
