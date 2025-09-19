@@ -158,16 +158,32 @@ function App() {
       </p>
 
       {!image && (
-        <div className="upload-box">
+        <div
+          className="upload-box"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+              const file = e.dataTransfer.files[0];
+              if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = () => setImage(reader.result);
+                reader.readAsDataURL(file);
+              }
+              e.dataTransfer.clearData();
+            }
+          }}
+        >
           <label className="upload-label">
-            <input type="file" accept="image/*" onChange={onFileChange} />
+            <input type="file" accept="image/*" onChange={onFileChange} hidden />
             <div className="image">
-            <span>Upload Your Image</span>
-            <span>Drag & drop or click to select your image (Max 10 MB) </span>
+              <span>Upload Your Image</span>
+              <span>Drag & drop or click to select your image (Max 10 MB)</span>
             </div>
           </label>
         </div>
       )}
+
 
       {image && !croppedImage && (
         <div className="cropper-container">
@@ -194,7 +210,7 @@ function App() {
                 value={zoom}
                 min={1}
                 max={3}
-                step={0.1}
+                step={0.01}
                 onChange={(e) => setZoom(Number(e.target.value))}
               />
               <span>{Math.round(zoom * 100)}%</span>
@@ -268,6 +284,15 @@ function App() {
                 onChange={(e) => setSize(e.target.value)}
               />
               256×256 px
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="500"
+                checked={size === "500"}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              500×500 px
             </label>
             <label>
               <input

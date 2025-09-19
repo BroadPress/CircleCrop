@@ -165,7 +165,7 @@ h1 {
 }
 
 .options label {
-  margin: 0 0.8rem;
+  margin: 1rem 0.6rem;
 }
 
 @media (max-width: 768px) {
