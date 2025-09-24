@@ -2,12 +2,16 @@
 Circle Crop is a simple utility to crop images into a circular shape. It supports different sizes and formats, making it useful for profile pictures, icons, and thumbnails.
 
 ## Tech Stack
-• React – framework  
-• JavaScript – language  
+• React – frontend framework  
+• react-easy-crop – image cropping with zoom & rotation  
+• file-saver – save files on client-side  
+• jsPDF – generate PDF files in browser  
+• JavaScript – programming language  
 • Vite – bundler / build tool  
 • Git – version control  
-• Netlify – deployments  
+• Netlify – deployment platform  
 • ChatGPT – AI-assisted coding support
+
 
 ### Preview
 <img width="1919" height="1087" alt="Screenshot 2025-09-24 124600" src="https://github.com/user-attachments/assets/e316c6ac-2fa1-4d24-95ef-a39e3fc25c1e" />
